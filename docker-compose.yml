@@ -1,0 +1,39 @@
+version: '3'
+
+services:
+  db:
+    image: postgres:latest
+    container_name: my-postgres-offline-db
+    ports:
+      - "5000:5432"
+    environment:
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+      POSTGRES_DB: mydb
+    volumes:
+      - ./pg_data:/var/lib/postgresql/pg_data
+  registry:
+    image: postgres:latest
+    container_name: my-postgres-feast-registry
+    ports:
+      - "55001:5432"
+    environment:
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+      POSTGRES_DB: feast
+    volumes:
+      - ./pg_data:/var/lib/postgresql/pg_data
+  localstack:
+    image: localstack/localstack
+    ports:
+      - "4566:4566"
+    environment:
+      - SERVICES=s3
+      - DEBUG=1
+      - DATA_DIR=/tmp/localstack/data
+      - HOSTNAME=localstack
+    volumes:
+      - ./localstack:/tmp/localstack
+
+networks:
+  minio-network:

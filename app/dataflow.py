@@ -37,8 +37,8 @@ class DataPipelineFlow(FlowSpec):
         default={
             "database": "mydb",
             "user": "postgres",
-            "password": "rJA6DQEUgo",
-            "host": "10.244.0.69",
+            "password": "1ki6EsXo4s",
+            "host": "10.244.0.3",
             "port": "5432",
         },
     )
@@ -60,13 +60,13 @@ class DataPipelineFlow(FlowSpec):
 
         self.next(self.create_db)
 
-    @step 
+    @step
     def create_db(self):
         logger.info("Start DB creation.")
         db = self.database_creds
         new_db_name = db["database"]
 
-        del db["database"] # db doesn't exist yet
+        del db["database"]  # db doesn't exist yet
 
         conn = psycopg2.connect(**db)
         cur = conn.cursor()
@@ -202,9 +202,7 @@ class DataPipelineFlow(FlowSpec):
 
         training_df = store.get_historical_features(
             entity_df=entity_df,
-            features=[
-                f"iris_data_view:{x}" for x in self.data_column_list]
-
+            features=[f"iris_data_view:{x}" for x in self.data_column_list],
         ).to_df()
 
         assert len(training_df) == 150  # assert that data was uploaded successfully

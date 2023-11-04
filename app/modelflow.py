@@ -6,7 +6,8 @@ from sklearn import tree
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
 import boto3
-import logging 
+import logging
+
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger()
 
@@ -97,7 +98,7 @@ class ModelPipelineFlow(FlowSpec):
         Model evaluation
         """
 
-        y_pred = self.model.predict(self.X_test)        
+        y_pred = self.model.predict(self.X_test)
 
         self.test_accuracy = accuracy_score(self.y_test, y_pred)
 
@@ -113,7 +114,9 @@ class ModelPipelineFlow(FlowSpec):
 
         model_registry_information = {"registry": False, "create_deploy": False}
         if self.test_accuracy >= 0.95:
-            logger.info(f"Model has accuracy {self.test_accuracy}, logging model for prod!")
+            logger.info(
+                f"Model has accuracy {self.test_accuracy}, logging model for prod!"
+            )
             mv = mlflow.register_model(model_uri, "iris-dataset-model")
             model_registry_information["registry"] = True
             model_registry_information["modeluri"] = "models:/{}/{}".format(
@@ -126,16 +129,15 @@ class ModelPipelineFlow(FlowSpec):
 
     @step
     def model_upload(self):
-
         if self.create_deploy:
             s3 = boto3.client(
-                's3',
-                endpoint_url='http://localhost:4566',
-                aws_access_key_id='test',   
-                aws_secret_access_key='test',
-                region_name='us-east-1'
+                "s3",
+                endpoint_url="http://localhost:4566",
+                aws_access_key_id="test",
+                aws_secret_access_key="test",
+                region_name="us-east-1",
             )
-            bucket_name = 'test-bucket'
+            bucket_name = "test-bucket"
             s3.create_bucket(Bucket=bucket_name)
             model_path_local = self.mv.source.replace("file://", "")
             file_name = f"{model_path_local}/model.pkl"
@@ -148,7 +150,6 @@ class ModelPipelineFlow(FlowSpec):
             logger.info("Not logging model!")
 
         self.next(self.end)
-
 
     @step
     def end(self):

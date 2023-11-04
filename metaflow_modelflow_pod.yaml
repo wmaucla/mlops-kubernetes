@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: metaflow-modelflow-pod
+spec:
+  restartPolicy: Never  # run only once
+  containers:
+  - name: metaflow-container
+    image: pipeline
+    imagePullPolicy: Never
+    command: ["/bin/sh"]
+    args: ["-c", "sleep infinity"]  # better for debugging
+    # command: ["python"]
+    # args: ["app/dataflow.py", "run"]

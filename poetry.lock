@@ -1605,21 +1605,6 @@ boto3 = "*"
 requests = "*"
 
 [[package]]
-name = "minio"
-version = "7.1.17"
-description = "MinIO Python SDK for Amazon S3 Compatible Cloud Storage"
-optional = false
-python-versions = "*"
-files = [
-    {file = "minio-7.1.17-py3-none-any.whl", hash = "sha256:0aa525d77a3bc61378444c2400b0ba2685ad4cd6ecb3fba4141a0d0765e25f40"},
-    {file = "minio-7.1.17.tar.gz", hash = "sha256:b0b687c1ec9be422a1f8b04c65fb8e43a1c090f9508178db57c434a17341c404"},
-]
-
-[package.dependencies]
-certifi = "*"
-urllib3 = "*"
-
-[[package]]
 name = "mlflow"
 version = "2.7.1"
 description = "MLflow: A Platform for ML Development and Productionization"
@@ -3418,4 +3403,4 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "p
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.10,<3.12"
-content-hash = "c4c851c3c355fe6262952c35ac08f95b58f31900e66ca8f87784d6c1f8a9647d"
+content-hash = "32de91a28c8f54310c8f2019ac3996bfc391c5a23fe1172433ce5859b9809626"

@@ -5,8 +5,10 @@ from datetime import datetime
 import pandas as pd
 import psycopg2
 from metaflow import Flow, FlowSpec, Parameter, get_metadata, step
+from psycopg2 import sql
 from sklearn import datasets
 from sklearn.preprocessing import minmax_scale
+
 
 from feast import FeatureStore
 
@@ -33,11 +35,11 @@ class DataPipelineFlow(FlowSpec):
         "database_creds",
         help="Postgres DB credentials",
         default={
-            "dbname": "mydb",
-            "user": "myuser",
-            "password": "mypassword",
-            "host": "localhost",
-            "port": "5000",
+            "database": "mydb",
+            "user": "postgres",
+            "password": "rJA6DQEUgo",
+            "host": "10.244.0.69",
+            "port": "5432",
         },
     )
 
@@ -55,6 +57,22 @@ class DataPipelineFlow(FlowSpec):
         # Load the analysis from the Flow.
         run = Flow("DataPipelineFlow").latest_successful_run
         logger.info("Using analysis from '%s'", str(run))
+
+        self.next(self.create_db)
+
+    @step 
+    def create_db(self):
+        logger.info("Start DB creation.")
+        db = self.database_creds
+        new_db_name = db["database"]
+
+        del db["database"] # db doesn't exist yet
+
+        conn = psycopg2.connect(**db)
+        cur = conn.cursor()
+        conn.autocommit = True
+        cur.execute(f"DROP DATABASE IF EXISTS {new_db_name}")
+        cur.execute(f"create database {new_db_name}")
 
         self.next(self.create_table)
 
@@ -166,7 +184,7 @@ class DataPipelineFlow(FlowSpec):
         and write metadata about features being used.
         """
         logger.info("Feast apply!")
-        subprocess.run(["feast", "apply"], cwd="./feast")
+        subprocess.run(["feast", "apply"], cwd="./app/feast")
         self.next(self.fetch_data)
 
     @step
@@ -174,7 +192,7 @@ class DataPipelineFlow(FlowSpec):
         """
         Verify for testing purposes that we can pull data from offline store.
         """
-        store = FeatureStore(repo_path="./feast/")
+        store = FeatureStore(repo_path="./app/feast")
         entity_df = pd.DataFrame.from_dict(
             {
                 "id": [i + 1 for i in range(150)],

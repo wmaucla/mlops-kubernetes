@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: postgres-client
+spec:
+  containers:
+  - name: postgres-client
+    image: postgres:latest  # Use the PostgreSQL client image
+    env:
+      - name: POSTGRES_USER
+        value: yourusername   # Use the same PostgreSQL username as in values.yaml
+      - name: POSTGRES_PASSWORD
+        value: yourpassword   # Use the same PostgreSQL password as in values.yaml
+    command: ["sleep"]
+    args: ["infinity"]
+  restartPolicy: Never

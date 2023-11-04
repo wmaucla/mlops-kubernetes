@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: debug
+spec:
+  containers:
+    - name: bash
+      image: bash:5
+      args: ["sleep", "infinity"]

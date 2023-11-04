@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: hello-foo-pod
+spec:
+  containers:
+  - name: hello-foo-container
+    image: bleh
+    imagePullPolicy: Never
+    command: ["/bin/sh"]
+    args: ["-c", "sleep infinity"]
+    # command: ["python"]
+    # args: ["app/dataflow.py", "run"]

@@ -33,7 +33,7 @@ class ModelPipelineFlow(FlowSpec):
         """
 
         # Load
-        store = FeatureStore(repo_path="./feast/")
+        store = FeatureStore(repo_path="./app/feast/")
 
         entity_df = pd.DataFrame.from_dict(
             {

@@ -13,9 +13,9 @@
 ![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white) ![Kubernetes](https://img.shields.io/badge/kubernetes-%23326ce5.svg?style=for-the-badge&logo=kubernetes&logoColor=white) ![Terraform](https://img.shields.io/badge/terraform-%235835CC.svg?style=for-the-badge&logo=terraform&logoColor=white)
 
 
-This repo is an experiment into creating a fully self-contained, local kubernetes deployment of a MLops cycle.
+While there are many examples that try and develop MLops, rarely are there repos that encapsulate that process end to end. This repo is an experiment into creating a fully self-contained, local kubernetes deployment of a MLops cycle. It showcases various ML tools and, more importantly, how they are managed.
 
-It involves:
+## 🚀 Features 🚀
 
 1. Setting up a local k8s cluster via minikube
 2. Deploying postgres DB as a datastore
@@ -77,7 +77,7 @@ eval $(minikube docker-env)
 ```
 
 <b> Note </b>
-Currently the values for postgres DB are hardcoded, as they need to be accessible to pods within the cluster. Thus, all references to the host need to be replaced first. 
+Currently the values for postgres DB are hardcoded, as they need to be accessible to pods within the cluster. Thus, all references to the host need to be replaced first. These are hardcoded in also to make it easier to understand the steps, whereas in practice they should be encrypted and never hardcoded.
 
 E.g: 
 
@@ -109,6 +109,7 @@ kubectl apply -f metaflow_pod_dataflow.yaml
 ```
 
 
+
 ### Manual installations
 
 This is only necessary if testing this out manually. The following notes are only kept from the development cycle:
@@ -135,5 +136,10 @@ kubectl port-forward --namespace default svc/psql-postgresql 5432:5432 &
     PGPASSWORD="$POSTGRES_PASSWORD" psql --host 127.0.0.1 -U postgres -d postgres -p 5432
 ```
 
+For testing purposes an on iterations:
+
+```bash
+docker build -t pipeline . && kubectl delete -f metaflow_modelflow_pod.yaml && kubectl apply -f metaflow_modeflow_pod.yaml
+```
 
 

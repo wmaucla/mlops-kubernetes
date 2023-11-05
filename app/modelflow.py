@@ -1,12 +1,13 @@
+import logging
 from datetime import datetime
-import pandas as pd
+
+import boto3
 import mlflow
-from metaflow import FlowSpec, step
+import pandas as pd
+from metaflow import FlowSpec, Parameter, step
 from sklearn import tree
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
-import boto3
-import logging
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger()
@@ -25,6 +26,30 @@ class ModelPipelineFlow(FlowSpec):
         "petal_length",
         "petal_width",
     ]
+
+    bucket_name = Parameter(
+        "bucket_name",
+        help="S3 bucket name",
+        default="demo-test-bucket",
+    )
+
+    endpoint_url = Parameter(
+        "endpoint_url",
+        help="Minio endpoint url",
+        default="http://10.244.0.26:9000",
+    )
+
+    access_key = Parameter(
+        "access_key",
+        help="Minio access key",
+        default="test-access-key",
+    )
+
+    secret_key = Parameter(
+        "secret_key",
+        help="Minio secret key",
+        default="test-secret-key",
+    )
 
     @step
     def start(self):
@@ -132,20 +157,22 @@ class ModelPipelineFlow(FlowSpec):
         if self.create_deploy:
             s3 = boto3.client(
                 "s3",
-                endpoint_url="http://localhost:4566",
-                aws_access_key_id="test",
-                aws_secret_access_key="test",
-                region_name="us-east-1",
+                endpoint_url=self.endpoint_url,
+                aws_access_key_id=self.access_key,
+                aws_secret_access_key=self.secret_key,
             )
-            bucket_name = "test-bucket"
-            s3.create_bucket(Bucket=bucket_name)
+            try:
+                s3.create_bucket(Bucket=self.bucket_name)
+            except:
+                print("Bucket already exists!")
+
             model_path_local = self.mv.source.replace("file://", "")
             file_name = f"{model_path_local}/model.pkl"
             bucket_model_name = "iris-model.pkl"
             # Upload the file to the bucket
-            s3.upload_file(file_name, bucket_name, bucket_model_name)
+            s3.upload_file(file_name, self.bucket_name, bucket_model_name)
 
-            logger.info(f"{bucket_model_name} has been uploaded to {bucket_name}")
+            logger.info(f"{bucket_model_name} has been uploaded to {self.bucket_name}")
         else:
             logger.info("Not logging model!")
 

@@ -8,7 +8,6 @@ from feast import (
 from feast.infra.offline_stores.contrib.postgres_offline_store.postgres_source import (
     PostgreSQLSource,
 )
-
 from feast.types import Float32, String
 
 flower = Entity(name="id")

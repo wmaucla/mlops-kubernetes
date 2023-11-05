@@ -4,13 +4,10 @@ from datetime import datetime
 
 import pandas as pd
 import psycopg2
+from feast import FeatureStore
 from metaflow import Flow, FlowSpec, Parameter, get_metadata, step
-from psycopg2 import sql
 from sklearn import datasets
 from sklearn.preprocessing import minmax_scale
-
-
-from feast import FeatureStore
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger()

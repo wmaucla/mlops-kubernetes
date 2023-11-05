@@ -23,9 +23,14 @@ This repo is an experiment into creating a fully self-contained, local kubernete
 2. Deploying postgres DB as a datastore via terraform
 3. Metaflow used job orchestration
 4. Feast for feature store implementation
-5. Seldon for model serving
+5. Mlflow for model registry
+6. Seldon for model serving
+
+See a high level overview here:
 
 ![mlops_platform.png](mlops_platform.png)
+
+Note that Kafka, Prometheus, Grafana are not shown (yet) in this example.
 
 ## 🔨 Versions 🔨
 

@@ -36,7 +36,7 @@ class ModelPipelineFlow(FlowSpec):
     endpoint_url = Parameter(
         "endpoint_url",
         help="Minio endpoint url",
-        default="http://10.244.0.26:9000",
+        default="http://10.244.0.30:9000",
     )
 
     access_key = Parameter(

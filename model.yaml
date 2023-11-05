@@ -1,0 +1,9 @@
+apiVersion: mlops.seldon.io/v1alpha1
+kind: Model
+metadata:
+  name: seldon-model
+  namespace: seldon-test
+spec:
+  storageUri: "minio:demo-test-bucket/"
+  requirements:
+  - sklearn

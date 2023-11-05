@@ -105,9 +105,59 @@ docker build -t pipeline .
 Test out the dataflow pipeline:
 
 ```bash
-kubectl apply -f metaflow_pod_dataflow.yaml
+kubectl apply -f metaflow_dataflow_pod.yaml
 ```
 
+Within the kubernetes logs, you should see that the job executes successfully. Next, try the modelflow job:
+
+```bash
+kubectl apply -f metaflow_modelflow_pod.yaml
+```
+
+This job writes a model to a fake S3 bucket hosted by minio.
+
+4. Setup fake minio bucket for model deployment
+
+Rclone needs to be configured specifically to read from our internal minio cluster, hence we need to shell into the seldon modelserver pod and set the rclone config:
+
+```bash
+rclone config
+```
+
+
+Edit the serverconfig to run as root
+restart statefulset / restart server
+kubectl apply
+
+
+minio
+5 / Amazon compliant
+16 / Minio
+
+test-access-key
+test-secret-key
+http://10.244.0.30:9000
+
+
+echo "[minio]
+type = s3
+provider = Minio
+access_key_id = test-access-key
+secret_access_key = test-secret-key
+endpoint = http://10.244.0.30:9000" > /rclone/rclone.conf
+
+rclone copy --config=/rclone/rclone.conf minio:demo-test-bucket/ temp/
+
+cat <<EOF > model-settings.json
+{
+    "name": "mnist",
+    "implementation": "mlserver_sklearn.SKLearnModel",
+    "parameters": {
+        "uri": "./iris-model.pkl",
+        "version": "v0.1.0"
+    }
+}
+EOF
 
 
 ### Manual installations
@@ -139,7 +189,8 @@ kubectl port-forward --namespace default svc/psql-postgresql 5432:5432 &
 For testing purposes an on iterations:
 
 ```bash
-docker build -t pipeline . && kubectl delete -f metaflow_modelflow_pod.yaml && kubectl apply -f metaflow_modeflow_pod.yaml
+docker build -t pipeline . && kubectl delete -f metaflow_modelflow_pod.yaml && kubectl apply -f metaflow_modelflow_pod.yaml
 ```
+
 
 

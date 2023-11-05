@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: metaflow-python-pod
+  name: metaflow-dataflow-pod
 spec:
   restartPolicy: Never  # run only once
   containers:

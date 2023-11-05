@@ -4,6 +4,7 @@ from datetime import datetime
 import boto3
 import mlflow
 import pandas as pd
+from feast import FeatureStore
 from metaflow import FlowSpec, Parameter, step
 from sklearn import tree
 from sklearn.metrics import accuracy_score
@@ -11,8 +12,6 @@ from sklearn.model_selection import train_test_split
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger()
-
-from feast import FeatureStore
 
 
 class ModelPipelineFlow(FlowSpec):
@@ -36,7 +35,7 @@ class ModelPipelineFlow(FlowSpec):
     endpoint_url = Parameter(
         "endpoint_url",
         help="Minio endpoint url",
-        default="http://10.244.0.30:9000",
+        default="http://10.244.0.42:9000",
     )
 
     access_key = Parameter(
@@ -163,7 +162,7 @@ class ModelPipelineFlow(FlowSpec):
             )
             try:
                 s3.create_bucket(Bucket=self.bucket_name)
-            except:
+            except Exception:
                 print("Bucket already exists!")
 
             model_path_local = self.mv.source.replace("file://", "")

@@ -1,0 +1,22 @@
+apiVersion: mlops.seldon.io/v1alpha1
+kind: Model
+metadata:
+  name: seldon-model-challenger
+  namespace: seldon-test
+spec:
+  storageUri: "minio:demo-test-bucket/"
+  requirements:
+  - sklearn
+---
+apiVersion: mlops.seldon.io/v1alpha1
+kind: Experiment
+metadata:
+  name: experiment-example
+  namespace: seldon-test
+spec:
+  default: seldon-model
+  candidates:
+  - name: seldon-model
+    weight: 50
+  - name: seldon-model-challenger
+    weight: 50

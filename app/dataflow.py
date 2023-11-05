@@ -35,7 +35,7 @@ class DataPipelineFlow(FlowSpec):
             "database": "mydb",
             "user": "postgres",
             "password": "1ki6EsXo4s",
-            "host": "10.244.0.3",
+            "host": "10.244.0.49",
             "port": "5432",
         },
     )

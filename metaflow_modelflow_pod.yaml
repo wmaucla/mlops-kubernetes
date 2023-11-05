@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: metaflow-modeflow-pod
+  name: metaflow-modelflow-pod
 spec:
   restartPolicy: Never  # run only once
   containers:

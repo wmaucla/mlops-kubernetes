@@ -15,7 +15,7 @@
 ![Ubuntu](https://img.shields.io/badge/Ubuntu-E95420?style=for-the-badge&logo=ubuntu&logoColor=white) ![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white) ![Kubernetes](https://img.shields.io/badge/kubernetes-%23326ce5.svg?style=for-the-badge&logo=kubernetes&logoColor=white) ![Terraform](https://img.shields.io/badge/terraform-%235835CC.svg?style=for-the-badge&logo=terraform&logoColor=white)
 
 
-This repo is an experiment into creating a fully self-contained, local kubernetes deployment of a MLops cycle. It showcases various ML tools and, more importantly, how they are managed. 
+This repo is an experiment into creating a fully self-contained, local kubernetes deployment of a MLops cycle. It showcases various ML tools and, more importantly, how they are managed. Run this end to end to get a glimpse into the true complexity of setting up a MLOps platform.
 
 ## 🚀 Features 🚀
 
@@ -25,7 +25,9 @@ This repo is an experiment into creating a fully self-contained, local kubernete
 4. Feast for feature store implementation
 5. Seldon for model serving
 
-## Versions
+![mlops_platform.png](mlops_platform.png)
+
+## 🔨 Versions 🔨
 
 * Minikube for k8s cluster setup
     * minikube v1.31.2 on Ubuntu 22.04
@@ -39,7 +41,7 @@ This repo is an experiment into creating a fully self-contained, local kubernete
     * 0.27.4
 
 
-## Commands
+## 💻 Commands 💻
 
 1. Launching local minikube cluster:
 
@@ -68,19 +70,19 @@ terraform init
 terraform apply
 ```
 
-This will install everything into the cluster
+This will install everything into the cluster via the provided terraform files. Note this will take some time to startup.
 
 
 3. Building / testing out a job
 
-Begin by making sure the local docker image can be built and accessible by minikube:
+Because this is built with local python code, begin by making sure the local docker image can be built and accessible by minikube:
 
 ```bash
 eval $(minikube docker-env)
 ```
 
 <b> Note </b>
-Currently the values for postgres DB are hardcoded, as they need to be accessible to pods within the cluster. Thus, all references to the host need to be replaced first. These are hardcoded in also to make it easier to understand the steps, whereas in practice they should be encrypted and never hardcoded.
+Currently the values for postgres DB are hardcoded, as they need to be accessible to pods within the cluster. Thus, all references to the host need to be replaced first. These are hardcoded in also to make it easier to understand the steps, whereas in practice they should be encrypted and pulled as secrets.
 
 E.g: 
 
@@ -97,7 +99,7 @@ kubectl get secret --namespace default psql-postgresql -o jsonpath="{.data.postg
 
 With an example value: 1ki6EsXo4s.
 
-Replace all instances within the code w/ the new value.
+Replace all instances within the code with the new value.
 
 Then build the docker image:
 
@@ -121,7 +123,7 @@ This job writes a model to a fake S3 bucket hosted by minio.
 
 4. Setup fake minio bucket for model deployment
 
-Normally seldon accesses s3/gcs buckets, granted permission using secrets. However, since this repo example is based purely on an internal, self-contained cluster, the rclone step needs to be configured specifically to read from our internal minio cluster.
+Normally seldon accesses s3/gcs buckets with granted permission using secrets. However, since this repo example is based purely on a local, self-contained cluster, the rclone step needs to be configured specifically to read from our internal minio bucket.
 
 Unfortunately this involves a small hack. We need to shell into the seldon modelserver pod and set the rclone config:
 
@@ -129,7 +131,7 @@ Unfortunately this involves a small hack. We need to shell into the seldon model
 2. restart mlserver statefulset deployment for changes to apply
 3. Go onto the rclone container and update the config to allow for this new way of syncing:
 
-This following script now points seldon's rclone to pull from our fake minio bucket
+Update seldon's rclone to pull from our fake minio bucket:
 ```bash
 echo "[minio]
 type = s3
@@ -190,8 +192,10 @@ This shows that 40/60 requests went to the challenger model, 20/60 requests to t
 
 ### Video Demo
 
+If the video doesn't play automaically, please see the `example_workflow.webm` file within the repo.
+
 <video controls>
-  <source src="example_workflow.webm" type="video/webm">
+  <source src="example_workflow.webm.mov" type="video/webm">
   Your browser does not support the video tag.
 </video>
 

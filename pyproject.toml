@@ -14,6 +14,7 @@ setuptools = "^68.2.2"
 mlflow = "^2.7.1"
 psycopg2 = "^2.9.9"
 feast = {extras = ["postgres"], version = "^0.34.1"}
+diagrams = "^0.23.4"
 
 [tool.poetry.group.dev.dependencies]
 black = "^23.10.0"

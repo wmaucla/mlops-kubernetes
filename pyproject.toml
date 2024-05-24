@@ -7,7 +7,7 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = ">=3.10,<3.11"
-pandas = "^1.4.3"
+pandas = ">=1.4.3,<3.0.0"
 scikit-learn = "^1.4.0"
 metaflow = "^2.10.3"
 mlflow = "^2.7.1"

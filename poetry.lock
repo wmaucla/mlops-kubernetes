@@ -1410,13 +1410,13 @@ python-dateutil = ">=2.7"
 
 [[package]]
 name = "metaflow"
-version = "2.11.16"
+version = "2.12.7"
 description = "Metaflow: More Data Science, Less Engineering"
 optional = false
 python-versions = "*"
 files = [
-    {file = "metaflow-2.11.16-py2.py3-none-any.whl", hash = "sha256:e811c52d00b2eda0039baf43dbd234935691abc951a6cca276fdc01011334983"},
-    {file = "metaflow-2.11.16.tar.gz", hash = "sha256:be7ae0e23cb794b7b2fa9ff5171b4237de91875f0969fb05eb3fac372d78bdb0"},
+    {file = "metaflow-2.12.7-py2.py3-none-any.whl", hash = "sha256:6045b9d403a3c675798eef69e9c817958c44aa985a8733779e94a64360e267d4"},
+    {file = "metaflow-2.12.7.tar.gz", hash = "sha256:a2daaf15451f6f88a66517861eedfb8976e907651efd1574e6384e4dea6619f7"},
 ]
 
 [package.dependencies]
@@ -1424,7 +1424,7 @@ boto3 = "*"
 requests = "*"
 
 [package.extras]
-stubs = ["metaflow-stubs (==2.11.16)"]
+stubs = ["metaflow-stubs (==2.12.7)"]
 
 [[package]]
 name = "mlflow"

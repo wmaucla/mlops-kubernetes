@@ -1,6 +1,6 @@
 ARG PROJECT_NAME=deployment
-ARG PY_VER_FULL=3.10.12
-ARG PY_VER_MAJOR=3.10
+ARG PY_VER_FULL=3.11.10
+ARG PY_VER_MAJOR=3.11
 
 FROM python:${PY_VER_FULL} as base
 ARG SYS_PACKAGES
@@ -13,7 +13,7 @@ ENV PROJECT_PYTHONPATH=${PROJECT_HOME}/.venv/lib/python${PY_VER_MAJOR}/site-pack
 ENV PROJECT_VENV_BIN=${PROJECT_HOME}/.venv/bin
 ENV PATH=${PROJECT_VENV_BIN}${PATH:+":$PATH"}
 
-RUN pip install poetry==1.5.1
+RUN pip install poetry==1.6.1
 
 RUN apt-get update --no-install-recommends \
   && apt-get install --no-install-recommends --yes \

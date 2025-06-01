@@ -1,5 +1,5 @@
 terraform {
-  required_version = "~>1.6.1"
+  required_version = "~>1.7.4"
 
   required_providers {
     helm        = "~>2.9"
@@ -7,7 +7,7 @@ terraform {
       source  = "gavinbunney/kubectl"
       version = "~>1.14"
     }
-    kubernetes = "~>2.21"
+    kubernetes = "~>2.30"
   }
 }
 

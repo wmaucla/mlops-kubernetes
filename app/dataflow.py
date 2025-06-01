@@ -35,7 +35,7 @@ class DataPipelineFlow(FlowSpec):
         default={
             "database": "mydb",
             "user": "postgres",
-            "password": "hello",
+            "password": os.environ.get("POSTGRES_PASSWORD", "hello"),
             "host": os.environ.get("POSTGRES_HOST", "0.0.0.0"),
             "port": "5432",
         },

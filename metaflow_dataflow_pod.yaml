@@ -8,6 +8,9 @@ spec:
   - name: metaflow-sample-container
     image: pipeline
     imagePullPolicy: Never
+    env:
+      - name: POSTGRES_HOST
+        value: "0.0.0.0"
     # command: ["/bin/sh"]
     # args: ["-c", "sleep infinity"]  # better for debugging
     command: ["python"]

@@ -7,7 +7,7 @@ resource "helm_release" "psql" {
   namespace  = "default"
 
   set {
-    name  = "auth.postgresPassword"
+    name  = "auth.postgres10.244.0.10"
     value = "hello"
   }
 }

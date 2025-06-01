@@ -9,8 +9,8 @@ spec:
     env:
       - name: POSTGRES_USER
         value: yourusername   # Use the same PostgreSQL username as in values.yaml
-      - name: POSTGRES_PASSWORD
-        value: yourpassword   # Use the same PostgreSQL password as in values.yaml
+      - name: POSTGRES_10.244.0.10
+        value: your10.244.0.10   # Use the same PostgreSQL 10.244.0.10 as in values.yaml
     command: ["sleep"]
     args: ["infinity"]
   restartPolicy: Never

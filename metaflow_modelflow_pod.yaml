@@ -10,6 +10,6 @@ spec:
     imagePullPolicy: Never
     env:
     - name: MINIO_ENDPOINT
-      value: "http://10.244.0.2:9000"
+      value: "http://10.244.0.3:9000"
     command: ["python"]
     args: ["app/modelflow.py", "run"]

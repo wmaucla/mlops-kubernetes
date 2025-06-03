@@ -25,3 +25,9 @@ spec:
           value: test-access-key
         - name: MINIO_SECRET_KEY
           value: test-secret-key
+        volumeMounts:
+        - name: minio-data
+          mountPath: /data
+      volumes:
+      - name: minio-data
+        emptyDir: {}

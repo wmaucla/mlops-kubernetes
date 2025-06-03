@@ -17,7 +17,7 @@ kubectl wait --for=condition=Ready pod -l app.kubernetes.io/name=postgresql --ti
 
 # Function to wait for MinIO pod and get its IP
 wait_for_minio_pod() {
-    local max_attempts=6  # 6 attempts * 20 seconds = 2 minutes maximum wait
+    local max_attempts=9  # 9 attempts * 60 seconds = 9 minutes maximum wait
     local attempt=1
     
     echo "Waiting for MinIO pod to be ready and get its IP..."
@@ -34,8 +34,8 @@ wait_for_minio_pod() {
             fi
         fi
         
-        echo "Attempt $attempt/$max_attempts: MinIO pod not ready or IP not available yet. Waiting 2 minutes..."
-        sleep 20
+        echo "Attempt $attempt/$max_attempts: MinIO pod not ready or IP not available yet. Waiting 20 seconds and retrying..."
+        sleep 60
         attempt=$((attempt + 1))
     done
     
@@ -171,7 +171,11 @@ fi
   exit 1
 )
 
-# Step 10: Apply example_model.yaml
+# Step 14: Check that mlserver-0 pod is up and ready
+echo "Checking that mlserver-0 pod is up and ready..."
+kubectl wait --for=condition=ready pod/mlserver-0 -n seldon-test --timeout=600s
+
+# Step 15: Apply example_model.yaml
 echo "Applying example_model.yaml..."
 kubectl apply -f example_model.yaml
 

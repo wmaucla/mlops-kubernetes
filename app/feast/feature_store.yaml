@@ -2,14 +2,14 @@ project: iris_test_dataset
 provider: local
 registry:
     registry_type: sql
-    path: postgresql://postgres:hxx9ZYIIfe@10.244.0.4:5432/mydb
+    path: postgresql://postgres:BKjifBFBas@10.244.0.3:5432/mydb
     cache_ttl_seconds: 60
 online_store: null
 offline_store:
-    host: 10.244.0.4
+    host: 10.244.0.3
     database: mydb
     user: postgres
-    password: hxx9ZYIIfe
+    password: BKjifBFBas
     type: postgres
     port: 5432
 entity_key_serialization_version: 2

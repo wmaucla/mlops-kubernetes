@@ -10,9 +10,9 @@ spec:
     imagePullPolicy: Never
     env:
       - name: POSTGRES_HOST
-        value: "10.244.0.3"
+        value: "10.244.0.7"
       - name: POSTGRES_PASSWORD
-        value: "BKjifBFBas"
+        value: "grCNmXF1AX"
     # command: ["/bin/sh"]
     # args: ["-c", "sleep infinity"]  # better for debugging
     command: ["python"]

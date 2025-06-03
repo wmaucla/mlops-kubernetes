@@ -4,10 +4,10 @@ resource "helm_release" "psql" {
   chart      = "postgresql"
   version    = "15.2.5" # Latest as of June 2025
 
-  namespace  = "default"
+  namespace = "default"
 
   set {
-    name = "postgresqlPassword"
+    name  = "postgresqlPassword"
     value = "hello"
   }
 }

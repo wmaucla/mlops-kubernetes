@@ -1,4 +1,5 @@
 import logging
+import os
 import subprocess
 from datetime import datetime
 
@@ -34,8 +35,8 @@ class DataPipelineFlow(FlowSpec):
         default={
             "database": "mydb",
             "user": "postgres",
-            "password": "1ki6EsXo4s",
-            "host": "10.244.0.49",
+            "password": os.environ.get("POSTGRES_PASSWORD", "hello"),
+            "host": os.environ.get("POSTGRES_HOST", "0.0.0.0"),
             "port": "5432",
         },
     )
@@ -60,7 +61,7 @@ class DataPipelineFlow(FlowSpec):
     @step
     def create_db(self):
         logger.info("Start DB creation.")
-        db = self.database_creds
+        db = self.database_creds.copy()  # Make a copy to avoid mutating the original
         new_db_name = db["database"]
 
         del db["database"]  # db doesn't exist yet

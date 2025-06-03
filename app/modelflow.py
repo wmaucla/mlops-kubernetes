@@ -1,5 +1,6 @@
 import logging
 from datetime import datetime
+import os
 
 import boto3
 import mlflow
@@ -35,7 +36,7 @@ class ModelPipelineFlow(FlowSpec):
     endpoint_url = Parameter(
         "endpoint_url",
         help="Minio endpoint url",
-        default="http://10.244.0.42:9000",
+        default=os.getenv("MINIO_ENDPOINT", "http://10.244.0.21:9000"),
     )
 
     access_key = Parameter(

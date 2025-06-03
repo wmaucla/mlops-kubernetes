@@ -143,7 +143,7 @@ type = s3
 provider = Minio
 access_key_id = test-access-key
 secret_access_key = test-secret-key
-endpoint = http://10.244.0.42:9000" > /rclone/rclone.conf
+endpoint = http://10.244.0.21:9000" > /rclone/rclone.conf
 ```
 
 5. Deploy model artifacts to cluster!
@@ -214,7 +214,7 @@ This is only necessary if testing this out manually. The following notes are onl
 Helpful tips for postgres:
 
 ```
-psql -h 10.244.0.49 -U postgres -d postgres -p 5432  # for connecting to the pod containing postgres
+psql -h 10.244.0.11 -U postgres -d postgres -p 5432  # for connecting to the pod containing postgres
 DROP DATABASE mydb; # for deleting db
 ```
 
@@ -253,7 +253,7 @@ minio
 
 test-access-key
 test-secret-key
-http://10.244.0.49:9000
+http://10.244.0.11:9000
 ```
 
 Once you have the config, you can test to make sure rclone is working correctly via:
